@@ -11,11 +11,10 @@ npm install react-native-usevalidation
 ## Usage
 
 ```js
-import { multiply } from 'react-native-usevalidation';
+import usevalidation from 'react-native-usevalidation';
 
 // ...
 
-const result = await multiply(3, 7);
 ```
 
 ## Contributing

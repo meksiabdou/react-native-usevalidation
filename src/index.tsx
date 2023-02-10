@@ -1,3 +1,8 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
-}
+import useValidation from './hooks/useValidation';
+export type {
+  ValidationInputType,
+  MessagesType,
+  EventType,
+} from './types/index';
+
+export default useValidation;

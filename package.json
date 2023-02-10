@@ -1,7 +1,7 @@
 {
   "name": "react-native-usevalidation",
-  "version": "0.1.0",
-  "description": "test",
+  "version": "1.0.0",
+  "description": "react-native-usevalidation",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
