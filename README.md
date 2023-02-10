@@ -1,6 +1,10 @@
 # react-native-usevalidation
 
-@meksiabdou/react-native-usevalidation
+![bundlephobia](https://badgen.net/bundlephobia/minzip/@meksiabdou/react-native-usevalidation)
+![downloads](https://badgen.net/npm/dt/@meksiabdou/react-native-usevalidation)
+![npm](https://badgen.net/npm/v/@meksiabdou/react-native-usevalidation)
+![license](https://badgen.net/github/license/meksiabdou/react-native-usevalidation)
+[![Known Vulnerabilities](https://snyk.io/test/github/meksiabdou/react-native-usevalidation/badge.svg?targetFile=package.json)](https://snyk.io/test/github/meksiabdou/react-native-usevalidation?targetFile=package.json)
 
 ## Installation
 
