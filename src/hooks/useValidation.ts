@@ -27,7 +27,7 @@ const defaultMessages: MessagesType = {
 const defaultRegex: { email: any; phone: any; url: any } = {
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
   // eslint-disable-next-line no-useless-escape
-  phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+  phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i,
   url: /(\b(https?):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/i,
 };
 
@@ -166,7 +166,7 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
     try {
       const elements: Array<EventType> = inputs.map((item) => {
         return {
-          value: data?.[item?.name],
+          value: data?.[item?.name]?.trim?.(),
           name: item?.name,
           type: item?.type,
         };
@@ -194,7 +194,7 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
   const handelOnChange = (event: EventType) => {
     try {
       const name = event?.name;
-      const value = event?.value?.trim?.();
+      const value = event?.value;
       const type = event?.type;
 
       const results = validation({ name, value, type });

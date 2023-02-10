@@ -3,6 +3,7 @@ export type {
   ValidationInputType,
   MessagesType,
   EventType,
+  InputType,
 } from './types/index';
 
 export default useValidation;
