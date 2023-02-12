@@ -82,9 +82,7 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           errorsList[name] = getMessage('match').replace('{match}', match);
         } else if (!required && isEmpty(value)) {
           results.status = true;
-          if (name in errorsList) {
-            delete errorsList[name];
-          }
+          errorsList[name] = undefined;
         } else if (
           (regexp || (defaultRegex as any)?.[field?.name]) &&
           !new RegExp(regexp || (defaultRegex as any)?.[field?.name]).test(
