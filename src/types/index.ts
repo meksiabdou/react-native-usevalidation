@@ -1,5 +1,5 @@
 export type ValidationParams =
-  | 'regexp'
+  | 'regExp'
   | 'min'
   | 'max'
   | 'minLength'
@@ -24,7 +24,7 @@ export interface EventType {
 
 export interface ValidationInputType {
   name: string;
-  regexp?: RegExp;
+  regExp?: RegExp;
   type?: InputType;
   min?: number;
   max?: number;
@@ -39,7 +39,7 @@ export interface ValidationInputType {
   lt?: string;
   lte?: string;
   messages?: {
-    regexp?: string;
+    regExp?: string;
     min?: string;
     max?: string;
     match?: string;

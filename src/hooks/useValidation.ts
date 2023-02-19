@@ -9,7 +9,7 @@ import type {
 } from '../types/index';
 
 const defaultMessages: MessagesType = {
-  regexp: 'the {field} is invalid',
+  regExp: 'the {field} is invalid',
   min: '{field} should be more or equal than {min}',
   max: '{field} must be less than or equal to {max}',
   minLength: '{field} should be more than {min} characters',
@@ -51,7 +51,7 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           maxLength,
           minLength,
           messages,
-          regexp,
+          //regexp,
           eq,
           ne,
           gt,
@@ -59,6 +59,8 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           lt,
           lte,
         } = field;
+
+        const regExp = field?.regExp || (field as any)?.regexp;
 
         const getMessage = (
           key: ValidationParams | ValidationOperators,
@@ -84,31 +86,43 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           results.status = true;
           errorsList[name] = undefined;
         } else if (
-          (regexp || (defaultRegex as any)?.[field?.name]) &&
-          !new RegExp(regexp || (defaultRegex as any)?.[field?.name]).test(
+          (regExp || (defaultRegex as any)?.[field?.name]) &&
+          !new RegExp(regExp || (defaultRegex as any)?.[field?.name]).test(
             value
           )
         ) {
           results.status = false;
-          errorsList[name] = getMessage('regexp');
-        } else if (minLength && !(value.length >= minLength)) {
+          errorsList[name] = getMessage('regExp');
+        } else if (
+          !isEmpty(minLength) &&
+          !(value.length >= Math.abs(minLength as any))
+        ) {
           results.status = false;
           errorsList[name] = getMessage('minLength').replace(
             '{min}',
-            minLength.toString()
+            Math.abs(minLength as any).toString()
           );
-        } else if (maxLength && !(value.length <= maxLength)) {
+        } else if (
+          !isEmpty(maxLength) &&
+          !(value.length <= Math.abs(maxLength as any))
+        ) {
           results.status = false;
           errorsList[name] = getMessage('maxLength').replace(
             '{max}',
-            maxLength.toString()
+            Math.abs(maxLength as any).toString()
           );
-        } else if (min && !(Number(value) >= min)) {
+        } else if (!isEmpty(min) && !(Number(value) >= (min as any))) {
           results.status = false;
-          errorsList[name] = getMessage('min').replace('{min}', min.toString());
-        } else if (max && !(Number(value) <= max)) {
+          errorsList[name] = getMessage('min').replace(
+            '{min}',
+            (min as any).toString()
+          );
+        } else if (!isEmpty(max) && !(Number(value) <= (max as any))) {
           results.status = false;
-          errorsList[name] = getMessage('max').replace('{max}', max.toString());
+          errorsList[name] = getMessage('max').replace(
+            '{max}',
+            (max as any).toString()
+          );
         } else if (match && data?.[match] && value !== data?.[match]) {
           results.status = false;
           errorsList[name] = getMessage('match').replace(

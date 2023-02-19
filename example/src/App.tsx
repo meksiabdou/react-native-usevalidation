@@ -64,10 +64,10 @@ export default function App() {
     {
       name: 'phone',
       required: true,
-      regexp: /^[0]{1}[1-9]{1}[0-9]{8}$/g,
+      regExp: /^[0]{1}[1-9]{1}[0-9]{8}$/g,
       messages: {
         required: 'the phone is required',
-        regexp: 'the phone is invalid',
+        regExp: 'the phone is invalid',
       },
       props: {
         label: 'Phone number',
@@ -80,7 +80,7 @@ export default function App() {
       required: true,
       messages: {
         required: 'the email is required',
-        regexp: 'the email is invalid',
+        regExp: 'the email is invalid',
       },
       props: {
         label: 'Email',
@@ -91,7 +91,7 @@ export default function App() {
     },
     {
       name: 'age',
-      required: true,
+      required: false,
       min: 20,
       max: 60,
       messages: {},
