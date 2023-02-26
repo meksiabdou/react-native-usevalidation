@@ -1,6 +1,9 @@
 # react-native-usevalidation
 
-![bundlephobia](https://badgen.net/bundlephobia/minzip/@meksiabdou/react-native-usevalidation)
+### React-Native form validation easy and simple to use
+
+<br/>
+
 ![downloads](https://badgen.net/npm/dt/@meksiabdou/react-native-usevalidation)
 ![npm](https://badgen.net/npm/v/@meksiabdou/react-native-usevalidation)
 ![license](https://badgen.net/github/license/meksiabdou/react-native-usevalidation)
