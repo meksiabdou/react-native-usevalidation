@@ -178,7 +178,7 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
     try {
       const elements: Array<EventType> = inputs.map((item) => {
         return {
-          value: data?.[item?.name]?.trim?.(),
+          value: data?.[item?.name]?.toString?.()?.trim?.(),
           name: item?.name,
           type: item?.type,
         };

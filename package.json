@@ -1,6 +1,6 @@
 {
   "name": "@meksiabdou/react-native-usevalidation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "hook validation form for react-native & expo",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
