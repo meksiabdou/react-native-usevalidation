@@ -174,7 +174,9 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
     }
   };
 
-  const handelOnSubmit = (onSubmit: (status: boolean) => void) => {
+  const handelOnSubmit = (
+    onSubmit: (status: boolean, currentErrors: Record<any, any>) => void
+  ) => {
     try {
       const elements: Array<EventType> = inputs.map((item) => {
         return {
@@ -195,9 +197,12 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           status[index] = results?.[index]?.status || false;
         }
       });
-
-      setErrors({ ...errors, ...resultsErrors });
-      return onSubmit(!(results.length === 0 || status.includes(false)));
+      const currentErrors = { ...errors, ...resultsErrors };
+      setErrors(currentErrors);
+      return onSubmit(
+        !(results.length === 0 || status.includes(false)),
+        currentErrors
+      );
     } catch (error) {
       console.error(error);
     }
