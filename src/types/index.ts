@@ -14,7 +14,21 @@ export type MessagesType = Record<
   string
 >;
 
-export type InputType = 'datetime-local' | 'date' | 'time' | 'text' | 'number';
+export type InputType =
+  | 'default'
+  | 'number-pad'
+  | 'decimal-pad'
+  | 'numeric'
+  | 'email-address'
+  | 'phone-pad'
+  | 'url' 
+  | 'ascii-capable'
+  | 'numbers-and-punctuation'
+  | 'name-phone-pad'
+  | 'twitter'
+  | 'web-search' 
+  | 'date' 
+  | 'visible-password';
 
 export interface EventType {
   name: string;
