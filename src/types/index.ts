@@ -21,13 +21,13 @@ export type InputType =
   | 'numeric'
   | 'email-address'
   | 'phone-pad'
-  | 'url' 
+  | 'url'
   | 'ascii-capable'
   | 'numbers-and-punctuation'
   | 'name-phone-pad'
   | 'twitter'
-  | 'web-search' 
-  | 'date' 
+  | 'web-search'
+  | 'date'
   | 'visible-password';
 
 export interface EventType {
