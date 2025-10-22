@@ -1,18 +1,13 @@
-/* eslint-disable react-native/no-inline-styles */
-import * as React from 'react';
-
 import {
   StyleSheet,
   View,
   Text,
-  TextInputProps,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  type TextInputProps,
 } from 'react-native';
-import useValidation, {
-  ValidationInputType,
-} from '@meksiabdou/react-native-usevalidation';
+import useValidation, { type ValidationInputType } from '@meksiabdou/react-native-usevalidation';
 
 const InputView = ({
   name,
@@ -20,10 +15,10 @@ const InputView = ({
   error,
   value,
   type,
-  handelOnChange,
+  handleOnChange,
   ...rest
 }: TextInputProps & {
-  handelOnChange: (e: any) => void;
+  handleOnChange: (e: any) => void;
   error?: string;
   name: string;
   type?: any;
@@ -36,7 +31,7 @@ const InputView = ({
         <TextInput
           {...rest}
           value={value}
-          onChangeText={(text) => handelOnChange({ value: text, type, name })}
+          onChangeText={(text) => handleOnChange({ value: text, type, name })}
           style={styles.input}
         />
       </View>
@@ -134,7 +129,7 @@ export default function App() {
     },
   ];
 
-  const { data, errors, handelOnChange, handelOnSubmit } =
+  const { data, errors, handleOnChange, handleOnSubmit } =
     useValidation(inputs);
 
   const onSubmit = (status: boolean) => {
@@ -159,7 +154,7 @@ export default function App() {
                 type={item?.type}
                 error={errors[item.name]}
                 value={data[item.name]}
-                handelOnChange={handelOnChange}
+                handleOnChange={handleOnChange}
               />
             );
           })}
@@ -168,7 +163,7 @@ export default function App() {
           <TouchableOpacity
             style={styles.btnSubmit}
             activeOpacity={0.8}
-            onPress={() => handelOnSubmit(onSubmit)}
+            onPress={() => handleOnSubmit(onSubmit)}
           >
             <Text style={{ color: '#fff', fontSize: 16 }}>Submit</Text>
           </TouchableOpacity>

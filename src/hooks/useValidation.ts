@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { isEmpty, stringToNumbre } from '../utils/index';
+import { isEmpty, stringToNumber } from '../utils/index';
 import type {
   EventType,
   MessagesType,
@@ -24,19 +24,24 @@ const defaultMessages: MessagesType = {
   lte: 'Be sure to less than or equal to {field}',
 };
 
-const defaultRegex: { email: any; phone: any; url: any } = {
+export const defaultValidationRegex: {
+  email: any;
+  phone: any;
+  url: any;
+  password: any;
+} = {
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-  // eslint-disable-next-line no-useless-escape
-  phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i,
+  phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
   url: /(\b(https?):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/i,
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&\_\-\x20-\x7E])[A-Za-z\d\W\_\-\x20-\x7E]{8,}$/,
 };
 
 const useValidation = (inputs: Array<ValidationInputType>) => {
-  const [errors, setErrors] = useState<any>({});
-  const [data, setData] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, any>>({});
+  const [data, setData] = useState<Record<string, any>>({});
 
   const validation = ({ name, value, type }: EventType) => {
-    const errorsList: any = {};
+    const errorsList: Record<string, any> = {};
     const results = { status: false, errors: errorsList };
     try {
       const [field] = inputs.filter(
@@ -86,8 +91,8 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
           results.status = true;
           errorsList[name] = undefined;
         } else if (
-          (regExp || (defaultRegex as any)?.[field?.name]) &&
-          !new RegExp(regExp || (defaultRegex as any)?.[field?.name]).test(
+          (regExp || (defaultValidationRegex as any)?.[field?.name]) &&
+          !new RegExp(regExp || (defaultValidationRegex as any)?.[field?.name]).test(
             value
           )
         ) {
@@ -129,26 +134,26 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
             '{match}',
             match.toString()
           );
-        } else if (!isEmpty(stringToNumbre({ value, type }))) {
-          const numbre: any = stringToNumbre({ value, type });
-          const getNumbre = (key: any) =>
-            stringToNumbre({ value: data?.[key], type }) as any;
-          if (eq && !isEmpty(data?.[eq]) && numbre !== getNumbre(eq)) {
+        } else if (!isEmpty(stringToNumber({ value, type }))) {
+          const number: any = stringToNumber({ value, type });
+          const getNumber = (key: any) =>
+            stringToNumber({ value: data?.[key], type }) as any;
+          if (eq && !isEmpty(data?.[eq]) && number !== getNumber(eq)) {
             results.status = false;
             errorsList[name] = getMessage('eq', eq);
-          } else if (ne && !isEmpty(data?.[ne]) && numbre === getNumbre(ne)) {
+          } else if (ne && !isEmpty(data?.[ne]) && number === getNumber(ne)) {
             results.status = false;
             errorsList[name] = getMessage('ne', ne);
-          } else if (gt && !isEmpty(data?.[gt]) && numbre <= getNumbre(gt)) {
+          } else if (gt && !isEmpty(data?.[gt]) && number <= getNumber(gt)) {
             results.status = false;
             errorsList[name] = getMessage('gt', gt);
-          } else if (gte && !isEmpty(data?.[gte]) && numbre < getNumbre(gte)) {
+          } else if (gte && !isEmpty(data?.[gte]) && number < getNumber(gte)) {
             results.status = false;
             errorsList[name] = getMessage('gte', gte);
-          } else if (lt && !isEmpty(data?.[lt]) && numbre >= getNumbre(lt)) {
+          } else if (lt && !isEmpty(data?.[lt]) && number >= getNumber(lt)) {
             results.status = false;
             errorsList[name] = getMessage('lt', lt);
-          } else if (lte && !isEmpty(data?.[lte]) && numbre > getNumbre(lte)) {
+          } else if (lte && !isEmpty(data?.[lte]) && number > getNumber(lte)) {
             results.status = false;
             errorsList[name] = getMessage('lte', lt);
           } else {
@@ -169,12 +174,14 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
       return results;
     } catch (error) {
       results.status = false;
-      console.error(error);
+      if(results.errors) {
+        results.errors.system = error?.toString?.()
+      }
       return results;
     }
   };
 
-  const handelOnSubmit = (
+  const handleOnSubmit = (
     onSubmit: (status: boolean, currentErrors: Record<any, any>) => void
   ) => {
     try {
@@ -204,11 +211,14 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
         currentErrors
       );
     } catch (error) {
-      console.error(error);
+      return onSubmit(
+        false,
+        {system: error?.toString?.()}
+      );
     }
   };
 
-  const handelOnChange = (event: EventType) => {
+  const handleOnChange = (event: EventType) => {
     try {
       const name = event?.name;
       const value = event?.value;
@@ -226,15 +236,15 @@ const useValidation = (inputs: Array<ValidationInputType>) => {
         [name]: value,
       });
     } catch (error) {
-      console.error(error);
+
     }
   };
 
   return {
     errors,
     setErrors,
-    handelOnSubmit,
-    handelOnChange,
+    handleOnSubmit,
+    handleOnChange,
     setData,
     data,
   };
